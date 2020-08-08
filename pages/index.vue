@@ -1,72 +1,153 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        vehicles
-      </h1>
-      <h2 class="subtitle">
-        My stylish Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <section 
+    v-if="vehicles.length" 
+    :class="$style.vehicles"
+  >
+    <header>
+      <!-- фильтр по типу транспортного средства -->
+      <VehiclesFilter 
+        :vehicle_types="vehicle_types"
+        @update-vehicles-list="update_vehicles_list"
+      />
+      <!-- блок для добавления нового транспорта -->
+      <AddVehicle />
+    </header>
+    <main>
+      <!-- список транспортных средств -->
+      <template v-if="filtered_vehicle_list.length">
+        <Vehicle
+          v-for="vehicle in filtered_vehicle_list"
+          :key="vehicle.id"
+          :content="vehicle"
+        />
+      </template>
+      <template v-else>
+        <p>Список пуст, воспользуйтесь фильтром выше для выбора.</p>
+      </template>
+    </main>
+  </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import { mapState } from 'vuex'
+import Vehicle from '~/components/Vehicle.vue'
+import VehiclesFilter from '~/components/VehiclesFilter.vue'
+import AddVehicle from '~/components/AddVehicle.vue'
 
 export default {
+  /**
+   * Делает запрос к api,
+   * сохраняет полученные данные в хранилище.
+   */
+  async asyncData({ $get_vehicles, store, error }) {
+    try {
+      const vehicles = await $get_vehicles()
+
+      store.commit('store_vehicles', vehicles)
+    } catch (e) {
+      error({ statusCode: 500, message: 'An error has occured' })
+    }
+  },
   components: {
-    Logo
+    Vehicle,
+    VehiclesFilter,
+    AddVehicle
+  },
+  data () {
+    return {
+      /**
+       * Массив со всеми типами 
+       * транспортных средств.
+       */
+      vehicle_types: [],
+      /**
+       * Массив с типами транспортных
+       * средств для отображения в текущий момент.
+       */
+      displayed_vehicle_types: [],
+      /**
+       * Массив содержащий отфильтрованный
+       * список транспортных средств.
+       */
+      filtered_vehicle_list: []
+    }
+  },
+  computed: {
+    ...mapState(['vehicles']),
+  },
+  methods: {
+    /**
+     * Обновляет массив с типами
+     * транспортных средств.
+     */
+    update_vehicle_types () {
+      const all_types = this.vehicles.map(item => item.type)
+      const unique_types = [...new Set(all_types)]
+
+      this.vehicle_types = unique_types
+    },
+    /**
+     * Обновляет массив с типами
+     * транспортных средств
+     * для отображения в текущий момент.
+     * 
+     * @param {array} displayed - массив с типами транспортных средств для отображения.
+     */
+    update_displayed_vehicle_types (displayed) {
+      this.displayed_vehicle_types = displayed
+    },
+    /**
+     * Обновляет массив содержащий отфильтрованный
+     * список транспортных средств.
+     */
+    update_filtered_vehicle_list () {
+      this.filtered_vehicle_list = this.vehicles.filter(item => {
+        return this.displayed_vehicle_types.indexOf(item.type) !== -1
+      })
+    },
+    /**
+     * Обновляет список транспортных средств
+     * отображаемых в текущий момент.
+     * 
+     * @param {array} displayed - массив с типами транспортных средств для отображения.
+     */
+    update_vehicles_list (displayed) {
+      this.update_displayed_vehicle_types(displayed)
+      this.update_filtered_vehicle_list()
+    }
+  },
+  created () {
+    this.update_vehicle_types()
+    this.update_displayed_vehicle_types(this.vehicle_types.slice())
+    this.update_filtered_vehicle_list()
   }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+<style module lang="scss">
+  .vehicles {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem 4rem;
+    background-color: #F3F4F7;
+    border-radius: 48px;
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+    @media screen and (max-width: 575px) {
+      padding: 2rem 1rem;
+    }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
 
-.links {
-  padding-top: 15px;
-}
+    & > main {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
 </style>

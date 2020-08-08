@@ -1,4 +1,3 @@
-
 export default {
   mode: 'universal',
   /*
@@ -23,17 +22,26 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/main.scss'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/get_vehicles.js'
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/style-resources'
   ],
+  /**
+   * Файлы с sass-переменными.
+   */
+  styleResources: {
+    scss: ['./assets/_variables.scss']
+  },
   /*
   ** Nuxt.js modules
   */
