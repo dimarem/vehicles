@@ -2,7 +2,7 @@
   <article :class="$style.vehicle">
     <aside>
       <img 
-        :src="content.image" 
+        :src="content.preview" 
         :alt="content.name"
       >
     </aside>
