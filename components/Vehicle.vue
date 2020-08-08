@@ -1,19 +1,24 @@
 <template>
-  <article :class="$style.vehicle">
-    <aside>
-      <img 
-        :src="content.preview" 
-        :alt="content.name"
-      >
-    </aside>
-    <main>
-      <h3>{{ content.name }}</h3>
-      <p>{{ content.description }}</p>
-      <div>
-        {{ content.rent }} $/h
-      </div>
-    </main>
-  </article>
+  <nuxt-link 
+    :class="$style.vehicle" 
+    :to="`/description/${content.id}`"
+  >
+    <article >
+      <aside>
+        <img 
+          :src="content.image" 
+          :alt="content.name"
+        >
+      </aside>
+      <main>
+        <h3>{{ content.name }}</h3>
+        <p>{{ content.description }}</p>
+        <div>
+          {{ content.rent }} $/h
+        </div>
+      </main>
+    </article>
+  </nuxt-link>
 </template>
 
 <script>
@@ -34,11 +39,13 @@ export default {
 <style module lang="scss">
   .vehicle {
     width: 30%;
-    display: flex;
+    display: block;
     margin: 1rem .5rem;
     padding: 1.5rem;
     background-color: white;
     border-radius: 32px;
+    color: $color;
+    text-decoration: none;
 
     @media screen and (max-width: 1000px) {
       width: 45%;
@@ -47,6 +54,10 @@ export default {
     @media screen and (max-width: 768px) {
       width: 100%;
       margin: 1rem 0;
+    }
+
+    article {
+      display: flex;
     }
 
     main {

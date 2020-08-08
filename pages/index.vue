@@ -1,8 +1,5 @@
 <template>
-  <section 
-    v-if="vehicles.length" 
-    :class="$style.vehicles"
-  >
+  <section :class="$style.vehicles">
     <header>
       <!-- фильтр по типу транспортного средства -->
       <VehiclesFilter 
@@ -29,7 +26,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import Vehicle from '~/components/Vehicle.vue'
 import VehiclesFilter from '~/components/VehiclesFilter.vue'
 import AddVehicle from '~/components/AddVehicle.vue'
@@ -39,13 +36,19 @@ export default {
    * Делает запрос к api,
    * сохраняет полученные данные в хранилище.
    */
-  async asyncData({ $get_vehicles, store, error }) {
+  async fetch () {
     try {
-      const vehicles = await $get_vehicles()
+      const vehicles = await this.$get_vehicles()
 
-      store.commit('store_vehicles', vehicles)
+      this.store_vehicles(vehicles)
+      this.update_vehicle_types()
+      this.update_displayed_vehicle_types(this.vehicle_types.slice())
+      this.update_filtered_vehicle_list()
     } catch (e) {
-      error({ statusCode: 500, message: 'An error has occured' })
+      if (process.server) {
+        this.$nuxt.context.res.statusCode = 500
+      }
+      throw new Error('An error has occured')
     }
   },
   components: {
@@ -76,6 +79,7 @@ export default {
     ...mapState(['vehicles']),
   },
   methods: {
+    ...mapMutations(['store_vehicles']),
     /**
      * Обновляет массив с типами
      * транспортных средств.

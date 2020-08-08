@@ -1,11 +1,9 @@
 <template>
   <div>
     <div :class="$style['top-panel']">
-      <div>
-        Pepelane
-      </div>
+      <div>Pepelane</div>
     </div>
-    <nuxt />
+    <nuxt keep-alive />
   </div>
 </template>
 
