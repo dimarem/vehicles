@@ -3,7 +3,7 @@
     :class="$style.vehicle" 
     :to="`/description/${content.id}`"
   >
-    <article >
+    <article>
       <aside>
         <img 
           :src="content.image" 
@@ -51,7 +51,7 @@ export default {
       width: 45%;
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 800px) {
       width: 100%;
       margin: 1rem 0;
     }

@@ -18,6 +18,18 @@ export const mutations = {
   }
 }
 
+export const getters = {
+  /**
+   * Ищет данные по транспортному средству
+   * по указанному id.
+   * 
+   * @returns {object | undefined}
+   */
+  get_vehicle: state => id => {
+    return state.vehicles.find(vehicle => vehicle.id === id)
+  }
+}
+
 export const actions = {
   /**
    * Перед отображением страницы
