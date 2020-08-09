@@ -6,8 +6,8 @@
         :vehicle_types="vehicle_types"
         @update-vehicles-list="update_vehicles_list"
       />
-      <!-- блок для добавления нового транспорта -->
-      <AddVehicle />
+      <!-- кнопка для добавления нового транспорта -->
+      <AddNew />
     </header>
     <main>
       <!-- список транспортных средств -->
@@ -29,13 +29,13 @@
 import { mapState } from 'vuex'
 import Vehicle from '~/components/Vehicle.vue'
 import VehiclesFilter from '~/components/VehiclesFilter.vue'
-import AddVehicle from '~/components/AddVehicle.vue'
+import AddNew from '~/components/AddNew.vue'
 
 export default {
   components: {
     Vehicle,
     VehiclesFilter,
-    AddVehicle
+    AddNew
   },
   data () {
     return {
