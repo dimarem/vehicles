@@ -20,11 +20,3 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
-
-Обращение к api было реализовано в виде плагина "get_vehicles.js", это позволит сделать метод "getVehicles" из файла "api/request.js" доступным в любой точке приложения.
-
-
-
-
-

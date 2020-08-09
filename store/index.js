@@ -17,3 +17,13 @@ export const mutations = {
     state.vehicles = data
   }
 }
+
+export const actions = {
+  /**
+   * Перед отображением страницы
+   * запрашивает данные по транспортным средствам.
+   */
+  async nuxtServerInit (ctx, { $get_vehicles }) {
+    await $get_vehicles()
+  }
+}

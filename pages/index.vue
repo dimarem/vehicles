@@ -26,31 +26,12 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 import Vehicle from '~/components/Vehicle.vue'
 import VehiclesFilter from '~/components/VehiclesFilter.vue'
 import AddVehicle from '~/components/AddVehicle.vue'
 
 export default {
-  /**
-   * Делает запрос к api,
-   * сохраняет полученные данные в хранилище.
-   */
-  async fetch () {
-    try {
-      const vehicles = await this.$get_vehicles()
-
-      this.store_vehicles(vehicles)
-      this.update_vehicle_types()
-      this.update_displayed_vehicle_types(this.vehicle_types.slice())
-      this.update_filtered_vehicle_list()
-    } catch (e) {
-      if (process.server) {
-        this.$nuxt.context.res.statusCode = 500
-      }
-      throw new Error('An error has occured')
-    }
-  },
   components: {
     Vehicle,
     VehiclesFilter,
@@ -79,7 +60,6 @@ export default {
     ...mapState(['vehicles']),
   },
   methods: {
-    ...mapMutations(['store_vehicles']),
     /**
      * Обновляет массив с типами
      * транспортных средств.
