@@ -1,8 +1,8 @@
-# vehicles
+# Тестовое задание для Frontend разработчика (Vue.js)
 
-> My stylish Nuxt.js project
+> Интерфейс по аренде транспортных средств.
 
-## Build Setup
+## Основные команды
 
 ```bash
 # install dependencies
@@ -19,4 +19,4 @@ $ npm run start
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+Документация [Nuxt.js docs](https://nuxtjs.org).

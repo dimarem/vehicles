@@ -113,7 +113,7 @@ export default {
     max-width: 1200px;
     margin: auto;
     padding: 2rem 4rem;
-    background-color: #F3F4F7;
+    background-color: $grey;
     border-radius: 48px;
 
     @media screen and (max-width: 575px) {
