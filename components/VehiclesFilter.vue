@@ -63,6 +63,14 @@ export default {
      */
     checked_types () {
       this.$emit('update-vehicles-list', this.checked_types.slice())
+    },
+    /**
+     * Отслеживает изменение передаваемых
+     * типов транспортных средств от
+     * родительского компонента, это сбросит фильтр.
+     */
+    vehicle_types () {
+      this.checked_types = this.vehicle_types.slice()
     }
   }
 }
@@ -75,7 +83,8 @@ export default {
     button {
       cursor: pointer;
       position: relative;
-      padding-right: 2rem !important;
+      padding: 0;
+      padding-right: 1.25rem !important;
       background-color: transparent;
       border: none;
       outline: none;

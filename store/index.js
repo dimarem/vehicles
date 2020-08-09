@@ -4,7 +4,12 @@ export const state = () => ({
    * 
    * @type {array}
    */
-  vehicles: []
+  vehicles: [],
+  /**
+   * Индикатор необходимости отображения
+   * окна для добавления транспорта.
+   */
+  add_window_required: false
 })
 
 export const mutations = {
@@ -15,6 +20,31 @@ export const mutations = {
    */
   store_vehicles (state, data) {
     state.vehicles = data
+  },
+  /**
+   * Отображает окно для добавления
+   * нового транспорта.
+   */
+  show_add_window (state) {
+    state.add_window_required = true
+    document.documentElement.style.overflow = 'hidden'
+  },
+  /**
+   * Скрывает окно для добавления
+   * нового транспорта.
+   */
+  hide_add_window (state) {
+    state.add_window_required = false
+    document.documentElement.style.overflow = ''
+  },
+  /**
+   * Добавляет новую запись о
+   * транспортном средстве.
+   * 
+   * @param {object} vehicle_obj - объект содержащий данные транспортного средства.
+   */
+  add_new_vehicle (state, vehicle_obj) {
+    state.vehicles.unshift(vehicle_obj)
   }
 }
 
@@ -26,7 +56,7 @@ export const getters = {
    * @returns {object | undefined}
    */
   get_vehicle: state => id => {
-    return state.vehicles.find(vehicle => vehicle.id === id)
+    return state.vehicles.find(vehicle => vehicle.id == id)
   }
 }
 

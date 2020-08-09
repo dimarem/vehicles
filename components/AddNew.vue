@@ -1,11 +1,16 @@
 <template>
   <div :class="$style['add-new']">
-    Add new <button>+</button>
+    Add new <button @click="show_add_window">+</button>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
+  methods: {
+    ...mapMutations(['show_add_window'])
+  }
 }
 </script>
 
@@ -34,10 +39,15 @@ export default {
       background-color: $violet;
       color: white;
       font-size: 1.5rem;
+      transition: .25s;
+
+      &:hover {
+        background-color: darken($color: $violet, $amount: 5%);
+      }
 
       @media screen and (max-width: 425px) {
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 1.5rem;
+        height: 1.5rem;
         font-size: .75rem;
         border-radius: 5px;
       }

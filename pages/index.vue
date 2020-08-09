@@ -57,7 +57,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['vehicles']),
+    ...mapState(['vehicles'])
   },
   methods: {
     /**
@@ -100,6 +100,22 @@ export default {
       this.update_filtered_vehicle_list()
     }
   },
+  watch: {
+    /**
+     * Данный метод будет вызываться
+     * в случае добавления нового транспортного средства.
+     */
+    vehicles () {
+      // во время первого добавления достаточно будет обновить
+      // массив содержащий типы транспортных средств для внесения
+      // видимых изменений, для последующих потребуется "ручное" обновление списка
+      if (this.vehicle_types.indexOf("custom") === -1) {
+        this.vehicle_types.push("custom")
+      } else {
+        this.update_filtered_vehicle_list()
+      }
+    }
+  },
   created () {
     this.update_vehicle_types()
     this.update_displayed_vehicle_types(this.vehicle_types.slice())
@@ -130,7 +146,7 @@ export default {
     & > main {
       display: flex;
       flex-flow: row wrap;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
     }
   }
