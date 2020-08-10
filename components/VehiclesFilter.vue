@@ -2,7 +2,7 @@
   <div :class="$style['vehicles-filter']">
     <!-- кнопка вызова списка типов -->
     <button
-      :class="{ [$style.active]: vehicle_types_list_required }"
+      :class="{ [$style['vehicles-filter-active']]: vehicle_types_list_required }"
       @click="vehicle_types_list_required = !vehicle_types_list_required"
     >
       Rent <span>whatever</span>
@@ -115,7 +115,7 @@ export default {
     }
   }
 
-  .active::after {
+  .vehicles-filter-active::after {
     transform: rotate(135deg) !important;
   }
 
