@@ -14,12 +14,11 @@
 <script>
 import { mapState } from 'vuex'
 import TopPanel from '~/components/TopPanel.vue'
-import AddWindow from '~/components/AddWindow.vue'
 
 export default {
   components: {
     TopPanel,
-    AddWindow
+    AddWindow: () => import(/* webpackChunkName: "add-window" */ '~/components/AddWindow.vue')
   },
   computed: {
     ...mapState(['add_window_required']),
