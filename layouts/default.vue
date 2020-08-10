@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="[ $style.app, { [$style['dark-mode']] : dark_mode } ]">
     <div :class="{ [$style.blured] : add_window_required }">
       <TopPanel />
       <nuxt keep-alive />
@@ -21,14 +21,22 @@ export default {
     AddWindow: () => import(/* webpackChunkName: "add-window" */ '~/components/AddWindow.vue')
   },
   computed: {
-    ...mapState(['add_window_required']),
+    ...mapState(['add_window_required', 'dark_mode']),
   }
 }
 </script>
 
 <style module lang="scss">
+  .app {
+    min-height: 100vh;
+  }
+
   .blured {
     filter: blur(32px);
+  }
+
+  .dark-mode {
+    background-color: $dark-mode;
   }
 </style>
 

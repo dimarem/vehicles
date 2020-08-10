@@ -1,5 +1,5 @@
 <template>
-  <section :class="$style['vehicle-description']">
+  <section :class="[ $style['vehicle-description'] , { [$style['dark-mode']] : dark_mode } ]">
     <!-- изображение транспортного средства -->
     <aside>
       <img 
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import DescriptionSpecs from '~/components/DescriptionSpecs.vue'
 import DescriptionTeam from '~/components/DescriptionTeam.vue'
 import DescriptionConditions from '~/components/DescriptionConditions.vue'
@@ -67,6 +67,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['dark_mode']),
     ...mapGetters(['get_vehicle'])
   },
   methods: {
@@ -172,6 +173,8 @@ export default {
       justify-content: space-between;
       align-items: center;
       margin: 3rem 0;
+      padding: 1rem;
+      border-radius: 16px;
       font-size: 1.25rem;
 
       & > span {
@@ -199,5 +202,15 @@ export default {
 
   .rent-price {
     color: $pink;
+  }
+
+  .dark-mode {
+    h1, h2, h3, footer {
+      color: white;
+    }
+
+    footer {
+      background-color: darken($color: $dark-mode, $amount: 5%);
+    }
   }
 </style>

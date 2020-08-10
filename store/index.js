@@ -9,7 +9,11 @@ export const state = () => ({
    * Индикатор необходимости отображения
    * окна для добавления транспорта.
    */
-  add_window_required: false
+  add_window_required: false,
+  /**
+   * Индикатор темной темы.
+   */
+  dark_mode: false
 })
 
 export const mutations = {
@@ -45,6 +49,12 @@ export const mutations = {
    */
   add_new_vehicle (state, vehicle_obj) {
     state.vehicles.unshift(vehicle_obj)
+  },
+  /**
+   * Устанавливает темную тему для приложения.
+   */
+  toggle_dark_mode (state) {
+    state.dark_mode = !state.dark_mode
   }
 }
 

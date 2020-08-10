@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style['vehicles-filter']">
+  <div :class="[ $style['vehicles-filter'] , { [$style['dark-mode']] : dark_mode }]">
     <!-- кнопка вызова списка типов -->
     <button
       :class="{ [$style['vehicles-filter-active']]: vehicle_types_list_required }"
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   props: {
     /**
@@ -53,6 +55,9 @@ export default {
        */
       vehicle_types_list_required: false
     }
+  },
+  computed: {
+    ...mapState(['dark_mode'])
   },
   watch: {
     /**
@@ -143,6 +148,12 @@ export default {
       &:not(:last-of-type) {
         margin-bottom: .5rem;
       }
+    }
+  }
+
+  .dark-mode {
+    button {
+      color: white;
     }
   }
 </style>

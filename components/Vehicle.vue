@@ -1,6 +1,6 @@
 <template>
   <nuxt-link 
-    :class="$style.vehicle" 
+    :class="[ $style.vehicle , { [$style['dark-mode']] : dark_mode } ]" 
     :to="`/description/${content.id}`"
   >
     <article>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   props: {
     /**
@@ -32,7 +34,10 @@ export default {
       type: Object,
       required: true
     }
-  }
+  },
+  computed: {
+    ...mapState(['dark_mode'])
+  },
 }
 </script>
 
@@ -89,6 +94,14 @@ export default {
     div {
       font-weight: bold;
       color: $pink;
+    }
+  }
+
+  .dark-mode {
+    background-color: $dark-mode;
+
+    h3 {
+      color: white;
     }
   }
 </style>

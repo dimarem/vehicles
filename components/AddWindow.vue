@@ -1,5 +1,5 @@
 <template>
-  <section :class="$style['add-window']">
+  <section :class="[ $style['add-window'] , { [$style['dark-mode']] : dark_mode } ]">
     <div :class="$style.warapper">
       <main>
         <header>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import AddWindowCloseBtn from '~/components/AddWindowCloseBtn.vue'
 import AddWindowImage from '~/components/AddWindowImage.vue'
 
@@ -91,6 +91,9 @@ export default {
        */
       vehicle_price_invalid: false
     }
+  },
+  computed: {
+    ...mapState(['dark_mode'])
   },
   methods: {
     ...mapMutations(['hide_add_window', 'add_new_vehicle']),
@@ -239,5 +242,20 @@ export default {
 
   .invalid {
     border-color: red !important;
+  }
+
+  .dark-mode {
+    h1 {
+      color: white;
+    }
+
+    main {
+      background-color: $dark-mode;
+    }
+
+    input {
+      background-color: darken($color: $dark-mode, $amount: 5%);
+      color: white;
+    }
   }
 </style>

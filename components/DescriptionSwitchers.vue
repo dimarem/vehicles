@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.switchers">
+  <div :class="[ $style.switchers , { [$style['dark-mode']] : dark_mode } ]">
     <button 
       :class="{ [$style['switchers-button-active']] : active === 1 }"
       @click="$emit('active', 1)"
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   props: {
     /**
@@ -32,6 +34,9 @@ export default {
       type: Number,
       required: true
     }
+  },
+  computed: {
+    ...mapState(['dark_mode'])
   }
 }
 </script>
@@ -58,5 +63,11 @@ export default {
 
   .switchers-button-active {
     color: $violet !important;
+  }
+
+  .dark-mode {
+    button {
+      color: $color-light;
+    }
   }
 </style>

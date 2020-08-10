@@ -1,5 +1,5 @@
 <template>
-  <section :class="$style['error-page']">
+  <section :class="[ $style['error-page'] , { [$style['dark-mode']] : dark_mode } ]">
     <div :class="$style['error-page-container']">
       <h1>{{ error.message }}</h1>
       <h2>Please refresh the page</h2>
@@ -11,25 +11,30 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      /**
-       * Объект содержащий данные ошибки.
-       */
-      error: {
-        type: Object,
-        required: true
-      }
-    },
-    methods: {
-      /**
-       * Перезагружает страницу.
-       */
-      reload () {
-        location.reload()
-      }
+import { mapState } from 'vuex'
+
+export default {
+  props: {
+    /**
+     * Объект содержащий данные ошибки.
+     */
+    error: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    ...mapState(['dark_mode'])
+  },
+  methods: {
+    /**
+     * Перезагружает страницу.
+     */
+    reload () {
+      location.reload()
     }
   }
+}
 </script>
 
 <style module lang="scss">
@@ -88,6 +93,14 @@
       &:hover {
         background-color: darken($color: $violet, $amount: 5%);
       }
+    }
+  }
+
+  .dark-mode {
+    background-color: darken($color: $dark-mode, $amount: 5%);
+    
+    h1 {
+      color: white;
     }
   }
 </style>

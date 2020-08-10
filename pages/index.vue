@@ -1,5 +1,5 @@
 <template>
-  <section :class="$style.vehicles">
+  <section :class="[ $style.vehicles , { [$style['dark-mode']] : dark_mode } ]">
     <header>
       <!-- фильтр по типу транспортного средства -->
       <VehiclesFilter 
@@ -57,7 +57,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['vehicles'])
+    ...mapState(['vehicles', 'dark_mode'])
   },
   methods: {
     /**
@@ -149,5 +149,9 @@ export default {
       justify-content: flex-start;
       align-items: center;
     }
+  }
+
+  .dark-mode {
+    background-color: darken($color: $dark-mode, $amount: 5%);
   }
 </style>

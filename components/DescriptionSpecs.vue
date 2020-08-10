@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article :class="{ [$style['dark-mode']] : dark_mode }">
     <p>{{ vehicle.specifications_text }}</p>
     <h2>Features:</h2>
     <div :class="$style['features-block']">
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   props: {
     /**
@@ -34,6 +36,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  computed: {
+    ...mapState(['dark_mode'])
   }
 }
 </script>
@@ -56,10 +61,18 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 16px;
+    margin-right: 1rem;
 
     svg {
       width: 1.5rem;
       height: 1.5rem;
+    }
+  }
+
+  .dark-mode {
+    .feature-label {
+      background-color: darken($color: $dark-mode, $amount: 5%);
     }
   }
 </style>
